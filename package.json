@@ -10,6 +10,7 @@
     "prettier:check": "prettier --check .",
     "prettier:write": "prettier --write .",
     "dev": "next dev --turbo",
+    "dev-wp": "next dev",
     "lint": "next lint",
     "lint:fix": "next lint --fix",
     "fix:all": "pnpm run lint:fix && pnpm run prettier:write",
