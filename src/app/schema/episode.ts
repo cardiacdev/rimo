@@ -41,3 +41,10 @@ export type Episode = z.infer<typeof episodeSchema>;
 
 export const isEpisode = (input: unknown): input is Episode =>
   episodeSchema.safeParse(input).success;
+
+export const episodeArraySchema = z.array(episodeSchema);
+
+export type EpisodeArray = z.infer<typeof episodeArraySchema>;
+
+export const isEpisodeArray = (input: unknown): input is EpisodeArray =>
+  episodeArraySchema.safeParse(input).success;

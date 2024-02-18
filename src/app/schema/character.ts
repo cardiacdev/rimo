@@ -63,3 +63,10 @@ export type Character = z.infer<typeof characterSchema>;
 
 export const isCharacter = (input: unknown): input is Character =>
   characterSchema.safeParse(input).success;
+
+export const characterArraySchema = z.array(characterSchema);
+
+export type CharacterArray = z.infer<typeof characterArraySchema>;
+
+export const isCharacterArray = (input: unknown): input is CharacterArray =>
+  characterArraySchema.safeParse(input).success;
