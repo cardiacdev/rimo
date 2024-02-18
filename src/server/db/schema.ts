@@ -8,32 +8,7 @@ import {
 } from "drizzle-orm/sqlite-core";
 import { type AdapterAccount } from "next-auth/adapters";
 
-/**
- * This is an example of how to use the multi-project schema feature of Drizzle ORM. Use the same
- * database instance for multiple projects.
- *
- * @see https://orm.drizzle.team/docs/goodies#multi-project-schema
- */
 export const createTable = sqliteTableCreator((name) => `rimo_${name}`);
-
-export const posts = createTable(
-  "post",
-  {
-    id: int("id", { mode: "number" }).primaryKey({ autoIncrement: true }),
-    name: text("name", { length: 256 }),
-    createdById: text("createdById", { length: 255 })
-      .notNull()
-      .references(() => users.id),
-    createdAt: int("created_at", { mode: "timestamp" })
-      .default(sql`CURRENT_TIMESTAMP`)
-      .notNull(),
-    updatedAt: int("updatedAt", { mode: "timestamp" }),
-  },
-  (example) => ({
-    createdByIdIdx: index("createdById_idx").on(example.createdById),
-    nameIndex: index("name_idx").on(example.name),
-  }),
-);
 
 export const users = createTable("user", {
   id: text("id", { length: 255 }).notNull().primaryKey(),
@@ -47,7 +22,59 @@ export const users = createTable("user", {
 
 export const usersRelations = relations(users, ({ many }) => ({
   accounts: many(accounts),
+  favoriteCharacters: many(favoriteCharacters),
+  favoriteEpisodes: many(favoriteEpisodes),
 }));
+
+export const favoriteEpisodes = createTable(
+  "favorite_episode",
+  {
+    userId: text("userId", { length: 255 })
+      .notNull()
+      .references(() => users.id),
+    episodeId: text("episodeId", { length: 255 }).notNull(),
+  },
+  (favoriteEpisode) => ({
+    compoundKey: primaryKey({
+      columns: [favoriteEpisode.userId, favoriteEpisode.episodeId],
+    }),
+  }),
+);
+
+export const favoriteEpisodesRelations = relations(
+  favoriteEpisodes,
+  ({ one }) => ({
+    user: one(users, {
+      fields: [favoriteEpisodes.userId],
+      references: [users.id],
+    }),
+  }),
+);
+
+export const favoriteCharacters = createTable(
+  "favorite_character",
+  {
+    userId: text("userId", { length: 255 })
+      .notNull()
+      .references(() => users.id),
+    characterId: text("characterId", { length: 255 }).notNull(),
+  },
+  (favoriteCharacter) => ({
+    compoundKey: primaryKey({
+      columns: [favoriteCharacter.userId, favoriteCharacter.characterId],
+    }),
+  }),
+);
+
+export const favoriteCharactersRelations = relations(
+  favoriteCharacters,
+  ({ one }) => ({
+    user: one(users, {
+      fields: [favoriteCharacters.userId],
+      references: [users.id],
+    }),
+  }),
+);
 
 export const accounts = createTable(
   "account",
