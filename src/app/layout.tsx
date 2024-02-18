@@ -1,10 +1,7 @@
 import "~/styles/globals.css";
 
 import { Inter } from "next/font/google";
-import NiceModal from "@ebay/nice-modal-react";
-import { TRPCReactProvider } from "~/trpc/react";
 import { Header } from "./_components/header";
-import { ThemeProvider } from "./_components/theme-provider";
 import { Providers } from "./_components/providers";
 
 const inter = Inter({

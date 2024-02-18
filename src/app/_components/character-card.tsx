@@ -13,6 +13,7 @@ export const CharacterCard = ({ character }: { character: Character }) => {
     <Card key={character.id} className="mt-4 flex items-center gap-4 p-4">
       <div>
         <button
+          type="button"
           className=" max-w-40 text-left text-xl font-bold"
           onClick={() => modal.show({ character })}
         >
