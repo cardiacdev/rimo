@@ -2,14 +2,12 @@
 
 import { Card } from "~/components/ui/card";
 import { type Episode } from "../schema/episode";
-import { useModal } from "@ebay/nice-modal-react";
-import { EpisodeDetailDialog } from "./episode-detail-dialog";
 import { api } from "~/trpc/react";
 import { useSession } from "next-auth/react";
 import { Heart } from "lucide-react";
+import Link from "next/link";
 
 export const EpisodeCard = ({ episode }: { episode: Episode }) => {
-  const modal = useModal(EpisodeDetailDialog, { episode });
   const { data } = useSession();
   const { data: favorites } = api.episode.getFavoriteEpisodes.useQuery({
     userId: data?.user.id ?? "",
@@ -37,13 +35,12 @@ export const EpisodeCard = ({ episode }: { episode: Episode }) => {
 
   return (
     <Card key={episode.id} className="mt-4 flex min-w-52 flex-col gap-2 p-4">
-      <button
+      <Link
+        href={`/episode/${episode.id}`}
         className="max-w-48 text-left text-lg font-bold"
-        type="button"
-        onClick={() => modal.show({ episode })}
       >
         {episode.name}
-      </button>
+      </Link>
       <p>{episode.episode}</p>
       {isFavorite && (
         <Heart

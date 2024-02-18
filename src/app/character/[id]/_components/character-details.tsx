@@ -5,6 +5,8 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { useSingleCharacterQuery } from "~/app/hooks/use-single-character-query";
+import { useSingleEpisodeQuery } from "~/app/hooks/use-single-episode-query";
+import { useSomeEpisodeQuery } from "~/app/hooks/use-some-episode-query";
 import { buttonVariants } from "~/components/ui/button";
 
 interface CharacterDetailsProps {
@@ -14,16 +16,28 @@ interface CharacterDetailsProps {
 export const CharacterDetails = ({ id }: CharacterDetailsProps) => {
   const { data: character } = useSingleCharacterQuery({
     id,
-    params: {},
+  });
+
+  const episodeIds = character?.episode.map((episode) => {
+    return episode.split("/").pop() ?? "";
+  });
+
+  const isSingleEpisode = (episodeIds && episodeIds.length === 1) ?? false;
+  const isMultipleEpisodes = (episodeIds && episodeIds.length > 1) ?? false;
+
+  const { data: episodes } = useSomeEpisodeQuery({
+    ids: episodeIds ?? [],
+    enabled: isMultipleEpisodes,
+  });
+
+  const { data: episode } = useSingleEpisodeQuery({
+    id: episodeIds?.[0] ?? "",
+    enabled: isSingleEpisode,
   });
 
   if (!character) {
     return null;
   }
-
-  const episodes = character.episode.map((episode) => {
-    return episode.split("/").pop();
-  });
 
   return (
     <div className="text-md flex flex-col gap-2">
@@ -61,19 +75,29 @@ export const CharacterDetails = ({ id }: CharacterDetailsProps) => {
           height={300}
           className="mt-4"
         />
-        <div>
-          <h2 className="mb-4 text-lg font-bold">Episodes</h2>
-          <div className="flex flex-wrap gap-4">
-            {episodes.map((episode) => (
+      </div>
+      <div>
+        <h2 className="mb-4 text-lg font-bold">Episodes</h2>
+        <div className="flex flex-wrap gap-4">
+          {isMultipleEpisodes &&
+            episodes?.map((episode) => (
               <Link
-                key={episode}
-                href={`/episode/${episode}`}
+                key={episode.id}
+                href={`/episode/${episode.id}`}
                 className={buttonVariants()}
               >
-                {episode}
+                {episode.name}
               </Link>
             ))}
-          </div>
+          {isSingleEpisode && episode && (
+            <Link
+              key={episode.id}
+              href={`/episode/${episode.id}`}
+              className={buttonVariants()}
+            >
+              {episode.name}
+            </Link>
+          )}
         </div>
       </div>
     </div>
