@@ -2,15 +2,10 @@
 
 import { useQuery } from "@tanstack/react-query";
 import { env } from "~/env";
-import { URLSearchParamsToObj, type SearchParams } from "~/lib/utils";
 import { isCharacter } from "../schema/character";
 
-const fetchCharacter = async (id: string, params: SearchParams) => {
-  const searchParams = new URLSearchParams(params);
-
-  const data = await fetch(
-    `${env.NEXT_PUBLIC_API_URL}/character/${id}?${searchParams.toString()}`,
-  );
+const fetchCharacter = async (id: string) => {
+  const data = await fetch(`${env.NEXT_PUBLIC_API_URL}/character/${id}`);
 
   try {
     const json = await data.json();
@@ -25,13 +20,14 @@ const fetchCharacter = async (id: string, params: SearchParams) => {
 
 export const useSingleCharacterQuery = ({
   id,
-  params,
+  enabled = true,
 }: {
   id: string;
-  params: SearchParams;
+  enabled?: boolean;
 }) => {
   return useQuery({
-    queryKey: ["character", { params: URLSearchParamsToObj(params), id }],
-    queryFn: () => fetchCharacter(id, params),
+    queryKey: ["character", { id }],
+    queryFn: () => fetchCharacter(id),
+    enabled,
   });
 };
