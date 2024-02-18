@@ -1,10 +1,11 @@
 import "~/styles/globals.css";
 
 import { Inter } from "next/font/google";
-
+import NiceModal from "@ebay/nice-modal-react";
 import { TRPCReactProvider } from "~/trpc/react";
 import { Header } from "./_components/header";
 import { ThemeProvider } from "./_components/theme-provider";
+import { Providers } from "./_components/providers";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -25,11 +26,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`font-sans ${inter.variable}`}>
-        <ThemeProvider defaultTheme="dark">
+        <Providers>
           <Header />
-
-          <TRPCReactProvider>{children}</TRPCReactProvider>
-        </ThemeProvider>
+          {children}
+        </Providers>
       </body>
     </html>
   );
