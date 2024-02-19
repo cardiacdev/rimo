@@ -20,7 +20,7 @@ export const Header = async () => {
           <nav className="flex items-center space-x-4">
             <Link
               href={session ? "/api/auth/signout" : "/api/auth/signin"}
-              className="rounded-full bg-primary px-4 py-1 font-semibold no-underline transition hover:bg-secondary"
+              className="text-nowrap rounded-full bg-primary px-4 py-1 font-semibold no-underline transition hover:bg-secondary"
             >
               {session ? "Sign out" : "Sign in"}
             </Link>
