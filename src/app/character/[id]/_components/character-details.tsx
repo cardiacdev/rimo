@@ -3,6 +3,7 @@ import Image from "next/image";
 import { Suspense } from "react";
 import { type Character } from "~/app/schema/character";
 import { EpisodesForCharacter } from "./episodes-for-character";
+import { CharacterHeart } from "../../_components/character-heart";
 
 interface CharacterDetailsProps {
   character: Character;
@@ -12,11 +13,12 @@ export const CharacterDetails = async ({
   character,
 }: CharacterDetailsProps) => {
   return (
-    <div>
-      <div className="flex w-full justify-between gap-8">
+    <div className="w-full">
+      <div className="flex justify-between gap-8">
         <div className="text-md flex flex-col gap-2">
-          <h1 className="text-2xl underline decoration-primary underline-offset-8">
+          <h1 className="flex items-center gap-x-3 text-2xl underline decoration-primary underline-offset-8">
             <b>{character.name}</b>
+            <CharacterHeart characterId={character.id} className="my-auto" />
           </h1>
           <p>
             <b>Species</b>: {character.species}
@@ -47,7 +49,7 @@ export const CharacterDetails = async ({
           alt={character.name}
           width={200}
           height={200}
-          className="mt-4 rounded-full"
+          className="mt-4 h-auto w-auto rounded-full"
         />
       </div>
       <Suspense fallback={<div>Loading...</div>}>
