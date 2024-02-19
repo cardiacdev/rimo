@@ -2,9 +2,15 @@
 
 import { Heart } from "lucide-react";
 import { useSession } from "next-auth/react";
+import { cn } from "~/lib/utils";
 import { api } from "~/trpc/react";
 
-export const EpisodeHeart = ({ episodeId }: { episodeId: number }) => {
+interface EpisodeHeartProps {
+  episodeId: number;
+  className?: string;
+}
+
+export const EpisodeHeart = ({ episodeId, className }: EpisodeHeartProps) => {
   const { data } = useSession();
   const { data: favorites } = api.episode.getFavoriteEpisodes.useQuery();
 
@@ -31,7 +37,10 @@ export const EpisodeHeart = ({ episodeId }: { episodeId: number }) => {
     <>
       {data?.user.id && isFavorite && (
         <Heart
-          className="mt-auto h-6 w-6 cursor-pointer self-end fill-red-500 text-red-500"
+          className={cn(
+            "mt-auto h-6 w-6 cursor-pointer self-end fill-red-500 text-red-500",
+            className,
+          )}
           onClick={() => {
             data?.user.id &&
               unfavoritize.mutate({
@@ -42,7 +51,7 @@ export const EpisodeHeart = ({ episodeId }: { episodeId: number }) => {
       )}
       {data?.user.id && !isFavorite && (
         <Heart
-          className="mt-auto h-6 w-6 cursor-pointer self-end"
+          className={cn("mt-auto h-6 w-6 cursor-pointer self-end", className)}
           onClick={() =>
             data?.user.id &&
             favoritize.mutate({
