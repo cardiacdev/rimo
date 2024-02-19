@@ -4,6 +4,8 @@ import { Suspense } from "react";
 import { type Character } from "~/app/schema/character";
 import { EpisodesForCharacter } from "./episodes-for-character";
 import { CharacterHeart } from "../../_components/character-heart";
+import { CharacterFunFacts } from "./character-fun-facts";
+import { getServerAuthSession } from "~/server/auth";
 
 interface CharacterDetailsProps {
   character: Character;
@@ -12,6 +14,7 @@ interface CharacterDetailsProps {
 export const CharacterDetails = async ({
   character,
 }: CharacterDetailsProps) => {
+  const session = await getServerAuthSession();
   return (
     <div className="w-full">
       <div className="flex justify-between gap-8">
@@ -43,13 +46,14 @@ export const CharacterDetails = async ({
           <p>
             <b>Location</b>: {character.location.name}
           </p>
+          {session?.user.id && <CharacterFunFacts character={character} />}
         </div>
         <Image
           src={character.image}
           alt={character.name}
           width={200}
           height={200}
-          className="mt-4 h-auto w-auto rounded-full"
+          className="mt-4 aspect-square h-full rounded-full"
         />
       </div>
       <Suspense fallback={<div>Loading...</div>}>

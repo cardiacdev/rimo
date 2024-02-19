@@ -13,6 +13,9 @@ export default async function Home() {
         <p className="mx-auto mt-2 max-w-[600px] text-gray-500 dark:text-gray-400 md:text-xl">
           Track your favorite Rick & Morty characters and episodes in one place.
         </p>
+        <p className="md:text-md mx-auto mt-2 max-w-[600px] text-gray-600 dark:text-gray-500">
+          (Now with TeamPilot AI Features!)
+        </p>
         <div className="mt-8 flex flex-wrap items-center justify-center gap-10">
           <Link
             href={"/character"}
