@@ -26,7 +26,7 @@ export const CharacterFunFacts = ({ character }: CharacterFunFactsProps) => {
             setFunFacts(data);
           }}
         >
-          Generate fun facts with TeamPilot!
+          Generate fun facts with Teampilot!
         </Button>
       </div>
       <ul className="max-w-lg list-inside list-disc space-y-1">

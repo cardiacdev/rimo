@@ -26,7 +26,7 @@ export const EpisodeFunFacts = ({ episode }: EpisodeFunFactsProps) => {
             setFunFacts(data);
           }}
         >
-          Generate fun facts with TeamPilot!
+          Generate fun facts with Teampilot!
         </Button>
       </div>
       <ul className="list-inside list-disc space-y-1">
