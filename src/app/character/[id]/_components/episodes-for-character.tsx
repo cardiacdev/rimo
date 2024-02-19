@@ -28,7 +28,9 @@ export const EpisodesForCharacter = async ({
 
   return (
     <div>
-      <h2 className="mb-4 text-lg font-bold">Episodes</h2>
+      <h2 className="mb-4 mt-5 text-xl font-bold underline decoration-primary underline-offset-8">
+        Episodes
+      </h2>
       <div className="flex flex-wrap gap-4">
         {isMultipleEpisodes &&
           episodes?.map((episode) => (

@@ -33,9 +33,23 @@ export const CharactersForEpisode = async ({
   }
 
   return (
-    <div className="flex flex-wrap gap-4">
-      {isMultipleCharacters &&
-        characters?.map((character) => (
+    <div>
+      <h2 className="mb-4 mt-5 text-xl font-bold underline decoration-primary underline-offset-8">
+        Characters
+      </h2>
+
+      <div className="flex flex-wrap gap-4">
+        {isMultipleCharacters &&
+          characters?.map((character) => (
+            <Link
+              key={character.id}
+              href={`/character/${character.id}`}
+              className={buttonVariants()}
+            >
+              {character.name}
+            </Link>
+          ))}
+        {isSingleCharacter && character && (
           <Link
             key={character.id}
             href={`/character/${character.id}`}
@@ -43,16 +57,8 @@ export const CharactersForEpisode = async ({
           >
             {character.name}
           </Link>
-        ))}
-      {isSingleCharacter && character && (
-        <Link
-          key={character.id}
-          href={`/character/${character.id}`}
-          className={buttonVariants()}
-        >
-          {character.name}
-        </Link>
-      )}
+        )}
+      </div>
     </div>
   );
 };
