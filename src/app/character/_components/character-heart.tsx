@@ -1,12 +1,12 @@
+"use client";
+
 import { Heart } from "lucide-react";
 import { useSession } from "next-auth/react";
 import { api } from "~/trpc/react";
 
 export const CharacterHeart = ({ characterId }: { characterId: number }) => {
   const { data } = useSession();
-  const { data: favorites } = api.character.getFavoriteCharacters.useQuery({
-    userId: data?.user.id ?? "",
-  });
+  const { data: favorites } = api.character.getFavoriteCharacters.useQuery();
 
   const utils = api.useUtils();
 
@@ -35,7 +35,6 @@ export const CharacterHeart = ({ characterId }: { characterId: number }) => {
           onClick={() => {
             data?.user.id &&
               unfavoritize.mutate({
-                userId: data.user.id,
                 characterId: String(characterId),
               });
           }}
@@ -47,7 +46,6 @@ export const CharacterHeart = ({ characterId }: { characterId: number }) => {
           onClick={() =>
             data?.user.id &&
             favoritize.mutate({
-              userId: data.user.id,
               characterId: String(characterId),
             })
           }

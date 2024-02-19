@@ -1,6 +1,6 @@
 import { Card } from "~/components/ui/card";
-import { type Episode } from "../schema/episode";
 import Link from "next/link";
+import { type Episode } from "~/app/schema/episode";
 import { EpisodeHeart } from "./episode-heart";
 
 export const EpisodeCard = ({ episode }: { episode: Episode }) => {

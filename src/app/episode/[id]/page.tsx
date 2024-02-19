@@ -1,3 +1,4 @@
+import { api } from "~/trpc/server";
 import { EpisodeDetails } from "./_components/episode-details";
 
 interface PageProps {
@@ -5,12 +6,12 @@ interface PageProps {
 }
 
 export default async function Page({ params: { id } }: PageProps) {
-  // TODO - prefetch character
+  const episode = await api.episode.fetchSingleEpisode.query({ id });
 
   return (
     <main className="flex min-h-screen bg-background">
       <div className="container flex pt-10 ">
-        <EpisodeDetails id={id} />
+        <EpisodeDetails episode={episode} />
       </div>
     </main>
   );

@@ -1,16 +1,16 @@
 import { CharacterDetails } from "./_components/character-details";
+import { api } from "~/trpc/server";
 
 interface PageProps {
   params: { id: string };
 }
 
 export default async function Page({ params: { id } }: PageProps) {
-  // TODO - prefetch character
-
+  const character = await api.character.fetchSingleCharacter.query({ id });
   return (
     <main className="flex min-h-screen bg-background">
-      <div className="container flex pt-10 ">
-        <CharacterDetails id={id} />
+      <div className="container flex pt-10">
+        <CharacterDetails character={character} />
       </div>
     </main>
   );

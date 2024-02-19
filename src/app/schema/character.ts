@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-const characterCollectionSchema = z.object({
+export const characterCollectionSchema = z.object({
   info: z.object({
     count: z.number(),
     pages: z.number(),

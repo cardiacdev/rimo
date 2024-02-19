@@ -6,9 +6,7 @@ import { api } from "~/trpc/react";
 
 export const EpisodeHeart = ({ episodeId }: { episodeId: number }) => {
   const { data } = useSession();
-  const { data: favorites } = api.episode.getFavoriteEpisodes.useQuery({
-    userId: data?.user.id ?? "",
-  });
+  const { data: favorites } = api.episode.getFavoriteEpisodes.useQuery();
 
   const utils = api.useUtils();
 
@@ -37,7 +35,6 @@ export const EpisodeHeart = ({ episodeId }: { episodeId: number }) => {
           onClick={() => {
             data?.user.id &&
               unfavoritize.mutate({
-                userId: data.user.id,
                 episodeId: String(episodeId),
               });
           }}
@@ -49,7 +46,6 @@ export const EpisodeHeart = ({ episodeId }: { episodeId: number }) => {
           onClick={() =>
             data?.user.id &&
             favoritize.mutate({
-              userId: data.user.id,
               episodeId: String(episodeId),
             })
           }

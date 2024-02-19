@@ -1,44 +1,16 @@
-"use client";
-
 import { format } from "date-fns";
 import Image from "next/image";
-import Link from "next/link";
-import React from "react";
-import { useSingleCharacterQuery } from "~/app/hooks/use-single-character-query";
-import { useSingleEpisodeQuery } from "~/app/hooks/use-single-episode-query";
-import { useSomeEpisodeQuery } from "~/app/hooks/use-some-episode-query";
-import { buttonVariants } from "~/components/ui/button";
+import React, { Suspense } from "react";
+import { type Character } from "~/app/schema/character";
+import { EpisodesForCharacter } from "./episodes-for-character";
 
 interface CharacterDetailsProps {
-  id: string;
+  character: Character;
 }
 
-export const CharacterDetails = ({ id }: CharacterDetailsProps) => {
-  const { data: character } = useSingleCharacterQuery({
-    id,
-  });
-
-  const episodeIds = character?.episode.map((episode) => {
-    return episode.split("/").pop() ?? "";
-  });
-
-  const isSingleEpisode = (episodeIds && episodeIds.length === 1) ?? false;
-  const isMultipleEpisodes = (episodeIds && episodeIds.length > 1) ?? false;
-
-  const { data: episodes } = useSomeEpisodeQuery({
-    ids: episodeIds ?? [],
-    enabled: isMultipleEpisodes,
-  });
-
-  const { data: episode } = useSingleEpisodeQuery({
-    id: episodeIds?.[0] ?? "",
-    enabled: isSingleEpisode,
-  });
-
-  if (!character) {
-    return null;
-  }
-
+export const CharacterDetails = async ({
+  character,
+}: CharacterDetailsProps) => {
   return (
     <div className="text-md flex flex-col gap-2">
       <h1 className="text-2xl">
@@ -76,30 +48,9 @@ export const CharacterDetails = ({ id }: CharacterDetailsProps) => {
           className="mt-4"
         />
       </div>
-      <div>
-        <h2 className="mb-4 text-lg font-bold">Episodes</h2>
-        <div className="flex flex-wrap gap-4">
-          {isMultipleEpisodes &&
-            episodes?.map((episode) => (
-              <Link
-                key={episode.id}
-                href={`/episode/${episode.id}`}
-                className={buttonVariants()}
-              >
-                {episode.name}
-              </Link>
-            ))}
-          {isSingleEpisode && episode && (
-            <Link
-              key={episode.id}
-              href={`/episode/${episode.id}`}
-              className={buttonVariants()}
-            >
-              {episode.name}
-            </Link>
-          )}
-        </div>
-      </div>
+      <Suspense fallback={<div>Loading...</div>}>
+        <EpisodesForCharacter character={character} />
+      </Suspense>
     </div>
   );
 };

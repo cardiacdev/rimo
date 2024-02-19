@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { Card } from "~/components/ui/card";
-import { type Character } from "../schema/character";
+import { type Character } from "../../schema/character";
 import Link from "next/link";
 import { CharacterHeart } from "./character-heart";
 
