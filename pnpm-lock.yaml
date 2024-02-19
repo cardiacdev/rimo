@@ -104,6 +104,9 @@ dependencies:
   "@tanstack/react-query":
     specifier: ^4.36.1
     version: 4.36.1(react-dom@18.2.0)(react@18.2.0)
+  "@teampilot/sdk":
+    specifier: ^0.0.27
+    version: 0.0.27(zod@3.22.4)
   "@trpc/client":
     specifier: ^10.43.6
     version: 10.45.1(@trpc/server@10.45.1)
@@ -2918,6 +2921,17 @@ packages:
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
       use-sync-external-store: 1.2.0(react@18.2.0)
+    dev: false
+
+  /@teampilot/sdk@0.0.27(zod@3.22.4):
+    resolution:
+      {
+        integrity: sha512-21woat/UHKNZ4e3pJllxd5rCfS8I0nZuU1j4PbX14hqq6k9h9AFI7k9BdHJUw5U+be1TYKfB+llq7Y363RhfLg==,
+      }
+    peerDependencies:
+      zod: ^3.21.4
+    dependencies:
+      zod: 3.22.4
     dev: false
 
   /@trpc/client@10.45.1(@trpc/server@10.45.1):
