@@ -27,7 +27,7 @@ export const PaginationControls = ({
   const last = () => router.push(`${path}?page=${pageCount}`);
 
   return (
-    <div className="absolute inset-x-0 bottom-[5vh] z-50 flex items-center justify-center space-x-2 py-4">
+    <div className="absolute inset-x-0 z-50 flex items-center justify-center space-x-2 py-4 2xl:bottom-[5vh]">
       <Button variant="outline" size="sm" onClick={first} disabled={page === 1}>
         <DoubleArrowLeftIcon />
       </Button>
