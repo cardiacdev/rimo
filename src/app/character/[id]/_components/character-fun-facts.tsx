@@ -14,7 +14,7 @@ export const CharacterFunFacts = ({ character }: CharacterFunFactsProps) => {
 
   return (
     <div>
-      <div className="flex items-baseline gap-8">
+      <div className="flex flex-wrap items-baseline gap-x-8">
         <h2 className="mb-4 mt-5 text-xl font-bold underline decoration-primary underline-offset-8">
           Fun facts
         </h2>

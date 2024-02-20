@@ -10,7 +10,7 @@ export const Header = async () => {
     <header className="sticky top-0 z-40 w-full border-b bg-background">
       <div className="container flex h-16 items-center space-x-4 sm:justify-between sm:space-x-0">
         <div className="flex items-center gap-x-4">
-          <Link href={"/"}>
+          <Link href={"/"} className="hidden sm:block">
             <span className="text-2xl font-bold">RI</span>
             <span className="text-2xl font-bold text-primary">MO</span>
           </Link>

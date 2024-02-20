@@ -5,6 +5,7 @@ import { Suspense } from "react";
 import { EpisodeHeart } from "../../_components/episode-heart";
 import { EpisodeFunFacts } from "./episode-fun-facts";
 import { getServerAuthSession } from "~/server/auth";
+import { Card } from "~/components/ui/card";
 
 interface EpisodeDetailsProps {
   episode: Episode;
@@ -14,7 +15,7 @@ export const EpisodeDetails = async ({ episode }: EpisodeDetailsProps) => {
   const session = await getServerAuthSession();
   return (
     <>
-      <div className="text-md flex flex-col gap-2">
+      <Card className="text-md mx-auto mb-8 flex max-w-6xl flex-col gap-2 p-4 md:p-12">
         <h1 className="flex items-center gap-x-3 text-2xl underline decoration-primary underline-offset-8">
           <b>{episode.name}</b>
           <EpisodeHeart episodeId={episode.id} className="my-auto" />
@@ -29,7 +30,7 @@ export const EpisodeDetails = async ({ episode }: EpisodeDetailsProps) => {
         <Suspense fallback={<div>Loading...</div>}>
           <CharactersForEpisode episode={episode} />
         </Suspense>
-      </div>
+      </Card>
     </>
   );
 };

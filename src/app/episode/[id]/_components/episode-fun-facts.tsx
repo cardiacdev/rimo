@@ -14,7 +14,7 @@ export const EpisodeFunFacts = ({ episode }: EpisodeFunFactsProps) => {
 
   return (
     <div>
-      <div className="flex items-baseline gap-8">
+      <div className="flex items-baseline flex-wrap gap-x-8">
         <h2 className="mb-4 mt-5 text-xl font-bold underline decoration-primary underline-offset-8">
           Fun facts
         </h2>

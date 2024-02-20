@@ -6,6 +6,7 @@ import { EpisodesForCharacter } from "./episodes-for-character";
 import { CharacterHeart } from "../../_components/character-heart";
 import { CharacterFunFacts } from "./character-fun-facts";
 import { getServerAuthSession } from "~/server/auth";
+import { Card } from "~/components/ui/card";
 
 interface CharacterDetailsProps {
   character: Character;
@@ -16,8 +17,8 @@ export const CharacterDetails = async ({
 }: CharacterDetailsProps) => {
   const session = await getServerAuthSession();
   return (
-    <div className="w-full">
-      <div className="flex justify-between gap-8">
+    <Card className="mx-auto mb-8 max-w-6xl p-4 md:p-12">
+      <div className="flex flex-wrap justify-between">
         <div className="text-md flex flex-col gap-2">
           <h1 className="flex items-center gap-x-3 text-2xl underline decoration-primary underline-offset-8">
             <b>{character.name}</b>
@@ -46,7 +47,6 @@ export const CharacterDetails = async ({
           <p>
             <b>Location</b>: {character.location.name}
           </p>
-          {session?.user.id && <CharacterFunFacts character={character} />}
         </div>
         <Image
           src={character.image}
@@ -56,9 +56,10 @@ export const CharacterDetails = async ({
           className="mt-4 aspect-square h-full rounded-full"
         />
       </div>
+      {session?.user.id && <CharacterFunFacts character={character} />}
       <Suspense fallback={<div>Loading...</div>}>
         <EpisodesForCharacter character={character} />
       </Suspense>
-    </div>
+    </Card>
   );
 };
