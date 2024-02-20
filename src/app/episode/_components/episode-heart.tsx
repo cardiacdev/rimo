@@ -18,15 +18,13 @@ export const EpisodeHeart = ({ episodeId, className }: EpisodeHeartProps) => {
 
   const favoritize = api.episode.addFavoriteEpisode.useMutation({
     onSuccess: async () => {
-      // TODO - invalidate based on query keys
-      await utils.invalidate();
+      await utils.episode.getFavoriteEpisodes.invalidate();
     },
   });
 
   const unfavoritize = api.episode.removeFavoriteEpisode.useMutation({
     onSuccess: async () => {
-      // TODO - invalidate based on query keys
-      await utils.invalidate();
+      await utils.episode.getFavoriteEpisodes.invalidate();
     },
   });
 

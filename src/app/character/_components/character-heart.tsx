@@ -21,15 +21,13 @@ export const CharacterHeart = ({
 
   const favoritize = api.character.addFavoriteCharacter.useMutation({
     onSuccess: async () => {
-      // TODO - invalidate based on query keys
-      await utils.invalidate();
+      await utils.character.getFavoriteCharacters.invalidate();
     },
   });
 
   const unfavoritize = api.character.removeFavoriteCharacter.useMutation({
     onSuccess: async () => {
-      // TODO - invalidate based on query keys
-      await utils.invalidate();
+      await utils.character.getFavoriteCharacters.invalidate();
     },
   });
 
