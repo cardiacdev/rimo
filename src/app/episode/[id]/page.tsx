@@ -10,7 +10,7 @@ export default async function Page({ params: { id } }: PageProps) {
 
   return (
     <main className="flex min-h-screen bg-background">
-      <div className="container flex pt-10 ">
+      <div className="container pt-10 ">
         <EpisodeDetails episode={episode} />
       </div>
     </main>

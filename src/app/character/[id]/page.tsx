@@ -9,7 +9,7 @@ export default async function Page({ params: { id } }: PageProps) {
   const character = await api.character.fetchSingleCharacter.query({ id });
   return (
     <main className="flex min-h-screen bg-background">
-      <div className="container flex pt-10">
+      <div className="container pt-10">
         <CharacterDetails character={character} />
       </div>
     </main>
