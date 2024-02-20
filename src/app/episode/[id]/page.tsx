@@ -6,7 +6,7 @@ interface PageProps {
 }
 
 export default async function Page({ params: { id } }: PageProps) {
-  const episode = await api.episode.fetchSingleEpisode.query({ id });
+  const episode = await api.episode.fetchSingleEpisode.query({ id: +id });
 
   return (
     <main className="flex min-h-screen bg-background">

@@ -1,7 +1,7 @@
 import { format } from "date-fns";
 import Image from "next/image";
 import { Suspense } from "react";
-import { type Character } from "~/app/schema/character";
+import { type Character } from "rickmortyapi";
 import { EpisodesForCharacter } from "./episodes-for-character";
 import { CharacterHeart } from "../../_components/character-heart";
 import { CharacterFunFacts } from "./character-fun-facts";

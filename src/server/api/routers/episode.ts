@@ -1,11 +1,6 @@
 import { and, eq } from "drizzle-orm";
-import { env } from "process";
+import { getEpisode, getEpisodes } from "rickmortyapi";
 import { z } from "zod";
-import {
-  episodeArraySchema,
-  episodeCollectionSchema,
-  episodeSchema,
-} from "~/app/schema/episode";
 
 import {
   createTRPCRouter,
@@ -48,38 +43,26 @@ export const episodeRouter = createTRPCRouter({
     }),
 
   fetchAllEpisodes: publicProcedure
-    .input(z.object({ page: z.string() }))
+    .input(z.object({ page: z.number() }))
     .query(async ({ input }) => {
-      const response = await fetch(
-        `${env.NEXT_PUBLIC_API_URL}/episode?page=${input.page}`,
-      );
-      if (!response.ok) throw new Error("Failed to fetch episodes");
-      const json = await response.json();
-      const data = episodeCollectionSchema.parse(json);
-      return data;
+      const data = await getEpisodes({ page: input.page });
+      if (data.status !== 200) throw new Error("Failed to fetch episodes");
+      return data.data;
     }),
 
   fetchSingleEpisode: publicProcedure
-    .input(z.object({ id: z.string() }))
+    .input(z.object({ id: z.number() }))
     .query(async ({ input }) => {
-      const response = await fetch(
-        `${env.NEXT_PUBLIC_API_URL}/episode/${input.id}`,
-      );
-      if (!response.ok) throw new Error("Failed to fetch episode");
-      const json = await response.json();
-      const data = episodeSchema.parse(json);
-      return data;
+      const data = await getEpisode(input.id);
+      if (data.status !== 200) throw new Error("Failed to fetch episode");
+      return data.data;
     }),
 
   fetchMultipleEpisodes: publicProcedure
-    .input(z.object({ ids: z.array(z.string()) }))
+    .input(z.object({ ids: z.array(z.number()) }))
     .query(async ({ input }) => {
-      const response = await fetch(
-        `${env.NEXT_PUBLIC_API_URL}/episode/${input.ids.join(",")}`,
-      );
-      if (!response.ok) throw new Error("Failed to fetch episodes");
-      const json = await response.json();
-      const data = episodeArraySchema.parse(json);
-      return data;
+      const data = await getEpisode(input.ids);
+      if (data.status !== 200) throw new Error("Failed to fetch episodes");
+      return data.data;
     }),
 });

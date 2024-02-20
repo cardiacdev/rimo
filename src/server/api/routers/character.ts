@@ -1,12 +1,6 @@
 import { and, eq } from "drizzle-orm";
 import { z } from "zod";
-import {
-  characterArraySchema,
-  characterCollectionSchema,
-  characterSchema,
-} from "~/app/schema/character";
-import { env } from "~/env";
-
+import { getCharacter, getCharacters } from "rickmortyapi";
 import {
   createTRPCRouter,
   protectedProcedure,
@@ -48,38 +42,26 @@ export const characterRouter = createTRPCRouter({
     }),
 
   fetchAllCharacters: publicProcedure
-    .input(z.object({ page: z.string() }))
+    .input(z.object({ page: z.number() }))
     .query(async ({ input }) => {
-      const response = await fetch(
-        `${env.NEXT_PUBLIC_API_URL}/character?page=${input.page}`,
-      );
-      if (!response.ok) throw new Error("Failed to fetch characters");
-      const json = await response.json();
-      const data = characterCollectionSchema.parse(json);
-      return data;
+      const data = await getCharacters({ page: input.page });
+      if (data.status !== 200) throw new Error("Failed to fetch characters");
+      return data.data;
     }),
 
   fetchSingleCharacter: publicProcedure
-    .input(z.object({ id: z.string() }))
+    .input(z.object({ id: z.number() }))
     .query(async ({ input }) => {
-      const response = await fetch(
-        `${env.NEXT_PUBLIC_API_URL}/character/${input.id}`,
-      );
-      if (!response.ok) throw new Error("Failed to fetch character");
-      const json = await response.json();
-      const data = characterSchema.parse(json);
-      return data;
+      const data = await getCharacter(input.id);
+      if (data.status !== 200) throw new Error("Failed to fetch character");
+      return data.data;
     }),
 
   fetchMultipleCharacters: publicProcedure
-    .input(z.object({ ids: z.array(z.string()) }))
+    .input(z.object({ ids: z.array(z.number()) }))
     .query(async ({ input }) => {
-      const response = await fetch(
-        `${env.NEXT_PUBLIC_API_URL}/character/${input.ids.join(",")}`,
-      );
-      if (!response.ok) throw new Error("Failed to fetch characters");
-      const json = await response.json();
-      const data = characterArraySchema.parse(json);
-      return data;
+      const data = await getCharacter(input.ids);
+      if (data.status !== 200) throw new Error("Failed to fetch characters");
+      return data.data;
     }),
 });

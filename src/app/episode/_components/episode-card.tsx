@@ -1,6 +1,6 @@
 import { Card } from "~/components/ui/card";
 import Link from "next/link";
-import { type Episode } from "~/app/schema/episode";
+import { type Episode } from "rickmortyapi";
 import { EpisodeHeart } from "./episode-heart";
 
 export const EpisodeCard = ({ episode }: { episode: Episode }) => {

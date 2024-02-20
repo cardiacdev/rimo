@@ -6,7 +6,7 @@ interface PageProps {
 }
 
 export default async function Page({ params: { id } }: PageProps) {
-  const character = await api.character.fetchSingleCharacter.query({ id });
+  const character = await api.character.fetchSingleCharacter.query({ id: +id });
   return (
     <main className="flex min-h-screen bg-background">
       <div className="container pt-10">

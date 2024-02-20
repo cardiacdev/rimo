@@ -1,5 +1,5 @@
 import { format } from "date-fns";
-import { type Episode } from "~/app/schema/episode";
+import { type Episode } from "rickmortyapi";
 import { CharactersForEpisode } from "./characters-for-episode";
 import { Suspense } from "react";
 import { EpisodeHeart } from "../../_components/episode-heart";

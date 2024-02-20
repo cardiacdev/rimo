@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { type Character } from "~/app/schema/character";
+import { type Character } from "rickmortyapi";
 import { buttonVariants } from "~/components/ui/button";
 import { api } from "~/trpc/server";
 
@@ -9,7 +9,7 @@ export const EpisodesForCharacter = async ({
   character: Character;
 }) => {
   const episodeIds = character?.episode.map((episode) => {
-    return episode.split("/").pop() ?? "";
+    return Number(episode.split("/").pop()) ?? "";
   });
 
   const isSingleEpisode = (episodeIds && episodeIds.length === 1) ?? false;
@@ -19,7 +19,9 @@ export const EpisodesForCharacter = async ({
   let episodes;
 
   if (isSingleEpisode && episodeIds[0]) {
-    episode = await api.episode.fetchSingleEpisode.query({ id: episodeIds[0] });
+    episode = await api.episode.fetchSingleEpisode.query({
+      id: +episodeIds[0],
+    });
   } else if (isMultipleEpisodes) {
     episodes = await api.episode.fetchMultipleEpisodes.query({
       ids: episodeIds,

@@ -9,20 +9,20 @@ export default async function CharacterPage({
     page?: string;
   };
 }) {
-  const page = searchParams.page ?? "1";
+  const page = Number(searchParams.page ?? 1);
   const characters = await api.character.fetchAllCharacters.query({ page });
 
   return (
     <>
       <div className="container mt-4 flex flex-wrap gap-x-4">
-        {characters.results.map((character) => (
+        {characters.results?.map((character) => (
           <CharacterCard key={character.id} character={character} />
         ))}
       </div>
       <PaginationControls
         path="/character"
         page={+page}
-        pageCount={characters.info.pages}
+        pageCount={characters.info?.pages ?? 1}
       />
     </>
   );

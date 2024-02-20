@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { type Character } from "~/app/schema/character";
+import { type Character } from "rickmortyapi";
 import { Button } from "~/components/ui/button";
 import { getCharacterFunFacts } from "~/server/actions/teampilot-actions";
 

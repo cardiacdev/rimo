@@ -2,8 +2,8 @@
 
 import { fetchTeampilotData } from "@teampilot/sdk";
 import { z } from "zod";
-import { type Character } from "~/app/schema/character";
-import { type Episode } from "~/app/schema/episode";
+import { type Character } from "rickmortyapi";
+import { type Episode } from "rickmortyapi";
 import { env } from "~/env";
 import { getServerAuthSession } from "../auth";
 

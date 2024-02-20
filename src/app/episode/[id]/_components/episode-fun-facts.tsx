@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { type Episode } from "~/app/schema/episode";
+import { type Episode } from "rickmortyapi";
 import { Button } from "~/components/ui/button";
 import { getEpisodeFunFacts } from "~/server/actions/teampilot-actions";
 
@@ -14,7 +14,7 @@ export const EpisodeFunFacts = ({ episode }: EpisodeFunFactsProps) => {
 
   return (
     <div>
-      <div className="flex items-baseline flex-wrap gap-x-8">
+      <div className="flex flex-wrap items-baseline gap-x-8">
         <h2 className="mb-4 mt-5 text-xl font-bold underline decoration-primary underline-offset-8">
           Fun facts
         </h2>
