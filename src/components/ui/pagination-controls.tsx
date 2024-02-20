@@ -28,10 +28,17 @@ export const PaginationControls = ({
 
   return (
     <div className="absolute inset-x-0 z-50 flex items-center justify-center space-x-2 py-4 2xl:bottom-[5vh]">
-      <Button variant="outline" size="sm" onClick={first} disabled={page === 1}>
+      <Button
+        name="First page"
+        variant="outline"
+        size="sm"
+        onClick={first}
+        disabled={page === 1}
+      >
         <DoubleArrowLeftIcon />
       </Button>
       <Button
+        name="Previous page"
         variant="outline"
         size="sm"
         onClick={previous}
@@ -41,6 +48,7 @@ export const PaginationControls = ({
       </Button>
       <span>{`Page ${page} of ${pageCount}`}</span>
       <Button
+        name="Next page"
         variant="outline"
         size="sm"
         onClick={next}
@@ -49,6 +57,7 @@ export const PaginationControls = ({
         <CaretRightIcon />
       </Button>
       <Button
+        name="Last page"
         variant="outline"
         size="sm"
         onClick={last}
