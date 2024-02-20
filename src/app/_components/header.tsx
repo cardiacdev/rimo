@@ -2,6 +2,7 @@ import { getServerAuthSession } from "~/server/auth";
 import { ModeToggle } from "./mode-toggle";
 import Link from "next/link";
 import { NavigationLinks } from "./navigation-links";
+import { buttonVariants } from "~/components/ui/button";
 
 export const Header = async () => {
   const session = await getServerAuthSession();
@@ -20,7 +21,7 @@ export const Header = async () => {
           <nav className="flex items-center space-x-4">
             <Link
               href={session ? "/api/auth/signout" : "/api/auth/signin"}
-              className="text-nowrap rounded-full bg-primary px-4 py-1 font-semibold no-underline transition hover:bg-secondary"
+              className={buttonVariants({ variant: "outline" })}
             >
               {session ? "Sign out" : "Sign in"}
             </Link>
